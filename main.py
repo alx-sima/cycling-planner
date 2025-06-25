@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-import requests_cache
-import retry_requests
+from requests_cache import CachedSession
+from retry_requests import retry
 
 
 class WeatherApi:
     def __init__(self, cache: str = ".weather_cache"):
-        self.session = requests_cache.CachedSession(cache, expire_after=-1)
-        self.session = retry_requests.retry(self.session, retries=3, backoff_factor=0.5)
+        self.session = CachedSession(cache, expire_after=-1)
+        self.session = retry(self.session, retries=3, backoff_factor=0.5)
 
     def request_weather_data(
         self, coords: tuple[float, float], start_date: str, end_date: str
