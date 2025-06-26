@@ -3,6 +3,9 @@ from retry_requests import retry
 
 import pandas as pd
 
+API_URL = "https://archive-api.open-meteo.com/v1/archive"
+REQUESTED_PARAMS = ["temperature_2m", "wind_direction_10m", "wind_speed_10m"]
+
 
 class WeatherApi:
     def __init__(self, cache: str = ".cache/weather_data"):
@@ -10,33 +13,33 @@ class WeatherApi:
         self.session = retry(self.session, retries=3, backoff_factor=0.5)
 
     def request_weather_data(
-        self, coords: tuple[float, float], start_date: str, end_date: str
-    ) -> dict:
-        latitude, longitude = coords
+        self, latitude: float, longitude: float, start_date: str, end_date: str
+    ) -> pd.DataFrame | None:
         response = self.session.get(
-            "https://archive-api.open-meteo.com/v1/archive",
+            API_URL,
             {
                 "latitude": latitude,
                 "longitude": longitude,
                 "start_date": start_date,
                 "end_date": end_date,
-                "hourly": ["temperature_2m", "wind_direction_10m", "wind_speed_10m"],
+                "hourly": REQUESTED_PARAMS,
                 "timezone": "GMT",
             },
         )
 
         if response.status_code != 200:
-            # Handle error appropriately, e.g., raise an exception or log the error
-            raise Exception(f"Error fetching weather data: {response.status_code}")
+            print(f"Error fetching weather data: {response.status_code}")
+            return
 
-        # TODO: Handle error
         response = response.json()
         data = response["hourly"]
 
         hourly_data = {
-            "time": pd.to_datetime(data["time"], utc=True),
+            "weather_time": pd.to_datetime(data["time"], utc=True),
             "temperature": data["temperature_2m"],
             "wind_direction": data["wind_direction_10m"],
             "wind_speed": data["wind_speed_10m"],
         }
-        return pd.DataFrame(data=hourly_data)
+        data = pd.DataFrame(data=hourly_data)
+        data.set_index("weather_time", inplace=True)
+        return data
