@@ -1,4 +1,5 @@
-/cache
-/data
-/.venv
+/__pycache__/
+/cache/
+/data/
+/.venv/
 .weather_cache.sqlite
