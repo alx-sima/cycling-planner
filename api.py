@@ -5,7 +5,7 @@ import pandas as pd
 
 
 class WeatherApi:
-    def __init__(self, cache: str = ".weather_cache"):
+    def __init__(self, cache: str = ".cache/weather_data"):
         self.session = CachedSession(cache, expire_after=-1)
         self.session = retry(self.session, retries=3, backoff_factor=0.5)
 
