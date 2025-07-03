@@ -11,6 +11,7 @@ debugpy==1.8.14
 decorator==5.2.1
 executing==2.2.0
 fonttools==4.58.4
+geopandas==1.1.1
 gpxpy==1.6.2
 idna==3.10
 ipykernel==6.29.5
@@ -24,8 +25,10 @@ kiwisolver==1.4.8
 matplotlib==3.10.3
 matplotlib-inline==0.1.7
 nest-asyncio==1.6.0
+networkx==3.5
 numpy==2.3.1
 orjson==3.10.18
+osmnx==2.0.4
 packaging==25.0
 pandas==2.3.0
 parso==0.8.4
@@ -38,7 +41,9 @@ psutil==7.0.0
 ptyprocess==0.7.0
 pure_eval==0.2.3
 Pygments==2.19.2
+pyogrio==0.11.0
 pyparsing==3.2.3
+pyproj==3.7.1
 python-dateutil==2.9.0.post0
 pytz==2025.2
 pyzmq==27.0.0
@@ -47,6 +52,7 @@ requests-cache==1.2.1
 retry-requests==2.0.0
 scikit-learn==1.7.0
 scipy==1.16.0
+shapely==2.1.1
 six==1.17.0
 stack-data==0.6.3
 threadpoolctl==3.6.0

@@ -163,7 +163,7 @@ class GPXParser:
                 dfs.append(df)
         return pd.concat(dfs, ignore_index=True)
 
-    def parse_gpx_dir(self, dir: str) -> [pd.DataFrame]:
+    def parse_gpx_dir(self, dir: str) -> list[pd.DataFrame]:
         """Read all GPX files from a directory."""
         files = [f for f in listdir(dir) if f.endswith(".gpx")]
 

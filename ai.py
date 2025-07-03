@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import pickle as pkl
 import sklearn as sk
 
@@ -19,18 +20,24 @@ class Model:
 
     def save(self, path: str):
         with open(path, "wb") as f:
-            pkl.dump(self.model, f)
+            pkl.dump(self.model, f, protocol=5)
 
-    def fit(self, X, y):
+    def fit(self, X: np.ndarray, y: np.ndarray):
         self.model.fit(X, y)
 
-    def predict(self, X):
+    def predict(self, X: np.ndarray) -> np.ndarray:
         return self.model.predict(X)
 
-    def score(self, X, y):
+    def score(self, X: np.ndarray, y: np.ndarray) -> float:
         return self.model.score(X, y)
 
-    def display_stats(self, X_train, y_train, X_test, y_test):
+    def display_stats(
+        self,
+        X_train: np.ndarray,
+        y_train: np.ndarray,
+        X_test: np.ndarray,
+        y_test: np.ndarray,
+    ):
         print("Feature importances:", self.model.feature_importances_)
         print(f"R^2 score on training set: {self.model.score(X_train, y_train):2f}")
         print(f"R^2 score on test set: {self.model.score(X_test, y_test):2f}")
